@@ -1,0 +1,9 @@
+asteroids\AsteroidsApplication.class
+asteroids\GameObjects\GameObject.class
+asteroids\GameObjects\Ship.class
+asteroids\Features\IShooting.class
+asteroids\GameObjects\Ammo.class
+asteroids\AsteroidsApplication$1.class
+asteroids\GameObjects\Asteroid.class
+asteroids\PolygonFactory.class
+asteroids\AsteroidsApplication$2.class
