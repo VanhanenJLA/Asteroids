@@ -19,8 +19,8 @@ import javafx.stage.Stage;
 
 public class AsteroidsApplication extends Application {
 
-    public static int WIDTH = 300;
-    public static int HEIGHT = 200;
+    public static int WIDTH = 1280;
+    public static int HEIGHT = 720;
 
     private Pane screen;
     private Scene scene;
@@ -33,8 +33,7 @@ public class AsteroidsApplication extends Application {
     private List<Ammo> ammo;
 
     public static void main(String[] args) {
-        launch(args);
-        
+        launch(args); 
     }
 
     @Override

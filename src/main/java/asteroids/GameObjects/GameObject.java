@@ -23,8 +23,8 @@ public abstract class GameObject {
         return alive;
     }
 
-    public void setAlive(boolean elossa) {
-        this.alive = elossa;
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 
     public void setVelocity(Point2D velocity) {
@@ -55,7 +55,8 @@ public abstract class GameObject {
     public void move() {
         this.shape.setTranslateX(this.shape.getTranslateX() + this.velocity.getX());
         this.shape.setTranslateY(this.shape.getTranslateY() + this.velocity.getY());
-
+        
+        
         if (this.shape.getTranslateX() < 0) {
             this.shape.setTranslateX(this.shape.getTranslateX() + AsteroidsApplication.WIDTH);
         }
