@@ -30,10 +30,9 @@ public class AsteroidsApplication extends Application {
 
     private Ship ship;
     private List<Asteroid> asteroids;
-    private List<Ammo> ammo;
 
     public static void main(String[] args) {
-        launch(args); 
+        launch(args);
     }
 
     @Override
@@ -62,7 +61,7 @@ public class AsteroidsApplication extends Application {
 
             private void generateAsteroids() {
                 if (Math.random()
-                        < 0.01) {
+                        < 0.00) {
                     Asteroid asteroid = new Asteroid(WIDTH, HEIGHT);
                     if (!asteroid.collidedWith(ship)) {
                         asteroids.add(asteroid);
@@ -72,32 +71,25 @@ public class AsteroidsApplication extends Application {
             }
 
             private void removeDeadGameObjects() {
-                removeDeadAmmo();
-                removeDeadAsteroids();
+                removeDeadGameObjects(ship.bullets);
+                removeDeadGameObjects(asteroids);
             }
+            private <T extends GameObject> void removeDeadGameObjects(List<T> gameObjects) {
+                gameObjects.stream()
+                        .filter(o -> !o.isAlive())
+                        .forEach(o -> screen.getChildren().remove(o.getShape()));
 
-            private void removeDeadAmmo() {
-                ammo.stream()
-                        .filter(ammo -> !ammo.isAlive())
-                        .forEach(ammo -> screen.getChildren().remove(ammo.getShape()));
-                ammo.removeAll(ammo.stream()
-                        .filter(ammo -> !ammo.isAlive())
-                        .collect(Collectors.toList()));
-            }
-
-            private void removeDeadAsteroids() {
-                asteroids.stream()
-                        .filter(asteroid -> !asteroid.isAlive())
-                        .forEach(asteroid -> screen.getChildren().remove(asteroid.getShape()));
-                asteroids.removeAll(asteroids.stream()
-                        .filter(asteroid -> !asteroid.isAlive())
+                gameObjects.removeAll(gameObjects.stream()
+                        .filter(o -> !o.isAlive())
                         .collect(Collectors.toList()));
             }
 
             private void moveGameObjects() {
-                ammo.forEach(GameObject::move);
-                asteroids.forEach(Asteroid::move);
+                moveGameObjects(asteroids);
                 ship.move();
+            }
+            private <T extends GameObject> void moveGameObjects(List<T> gameObjects) {
+                gameObjects.forEach(GameObject::move);
             }
 
             private void processPlayerInput() {
@@ -114,15 +106,13 @@ public class AsteroidsApplication extends Application {
                     ship.turnRight();
                 }
 
-                if (playerInputs.getOrDefault(KeyCode.SPACE, false) && ammo.size() < 3) {
-                    // ammutaan
-                    Ammo ammus = new Ammo((int) ship.getShape().getTranslateX(),
-                            (int) ship.getShape().getTranslateY());
-                    ammus.getShape().setRotate(ship.getShape().getRotate());
-                    ammo.add(ammus);
-                    ammus.accelerate();
-                    ammus.setVelocity(ammus.getVelocity().normalize().multiply(3));
-                    screen.getChildren().add(ammus.getShape());
+                if (playerInputs.getOrDefault(KeyCode.SPACE, false)) {
+
+                    if (ship.canShoot()) {
+                        Ammo bullet = ship.shoot();
+                        screen.getChildren().add(bullet.getShape());
+                    }
+
                 }
             }
 
@@ -135,7 +125,7 @@ public class AsteroidsApplication extends Application {
             }
 
             private void killHitAsteroids() {
-                ammo.forEach(ammo -> {
+                ship.bullets.forEach(ammo -> {
                     asteroids.forEach(asteroid -> {
                         if (ammo.collidedWith(asteroid)) {
                             ammo.setAlive(false);
@@ -157,7 +147,6 @@ public class AsteroidsApplication extends Application {
             Asteroid asteroid = new Asteroid(rnd.nextInt(100), rnd.nextInt(100));
             asteroids.add(asteroid);
         }
-        ammo = new ArrayList<>();
     }
 
     private void displayGameObjects() {
