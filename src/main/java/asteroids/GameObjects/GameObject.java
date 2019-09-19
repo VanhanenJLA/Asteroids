@@ -7,7 +7,7 @@ import javafx.scene.shape.Shape;
 
 public abstract class GameObject {
 
-    private Polygon shape;
+    private final Polygon shape;
     private Point2D velocity;
     private boolean alive;
 
@@ -55,8 +55,10 @@ public abstract class GameObject {
     public void move() {
         this.shape.setTranslateX(this.shape.getTranslateX() + this.velocity.getX());
         this.shape.setTranslateY(this.shape.getTranslateY() + this.velocity.getY());
-        
-        
+        wrapAroundIfOutOfBounds();
+    }
+
+    private void wrapAroundIfOutOfBounds() {
         if (this.shape.getTranslateX() < 0) {
             this.shape.setTranslateX(this.shape.getTranslateX() + AsteroidsApplication.WIDTH);
         }
@@ -83,4 +85,5 @@ public abstract class GameObject {
 
         this.velocity = this.velocity.add(deltaX, deltaY);
     }
+
 }

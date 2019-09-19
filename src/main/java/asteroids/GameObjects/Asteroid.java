@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Asteroid extends GameObject {
 
-    private double rotationalSpeed;
+    private final double angularVelocity;
 
     public Asteroid(int x, int y) {
         super(new PolygonFactory().createPolygon(), x, y);
@@ -19,12 +19,12 @@ public class Asteroid extends GameObject {
             accelerate();
         }
 
-        this.rotationalSpeed = 0.5 - rand.nextDouble();
+        this.angularVelocity = 0.5 - rand.nextDouble();
     }
 
     @Override
     public void move() {
         super.move();
-        super.getShape().setRotate(super.getShape().getRotate() + rotationalSpeed);
+        super.getShape().setRotate(super.getShape().getRotate() + angularVelocity);
     }
 }
