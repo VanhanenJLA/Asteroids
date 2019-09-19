@@ -5,6 +5,8 @@
  */
 package asteroids.Features;
 
+import asteroids.GameObjects.Ammo;
+
 /**
  *
  * @author Jouni
@@ -13,8 +15,6 @@ public interface IShooting {
 
     public boolean isCooldown();
 
-    public void setCooldown(boolean cooldown);
-
-    public void shoot();
+    public Ammo shoot();
 
 }
