@@ -60,8 +60,7 @@ public class AsteroidsApplication extends Application {
             }
 
             private void generateAsteroids() {
-                if (Math.random()
-                        < 0.00) {
+                if (Math.random() < 0.00) {
                     Asteroid asteroid = new Asteroid(WIDTH, HEIGHT);
                     if (!asteroid.collidedWith(ship)) {
                         asteroids.add(asteroid);
